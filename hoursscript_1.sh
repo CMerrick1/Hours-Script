@@ -39,7 +39,7 @@ read payp
 if [ $payp = y ]
 then
        
-cat "`date +%A%F`"payperiod.txt | mail -s "`date +%A%F`" cmerrick@intranet.techsquare.com
+cat "`date +%A%F`"payperiod.txt | mail -s "`date +%A%F`" sb@intranet.techsquare.com
 
 #email daily
 #
