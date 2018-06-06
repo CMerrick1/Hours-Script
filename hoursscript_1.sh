@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # hours script
-#variables day date  send  stime etime ttime payp productivity
+#variables day date  send  stime etime ttime payp productivity mtotal emergency
 #<username>|startdate|starttime|enddate|endtime|totalhours(rounded to nearest .25)|MGHPCC/INTERN|billable(y/n)|emergency(y/n)|
 
 
@@ -25,21 +25,28 @@ echo -n "Please enter total time worked today(please round to the nearest 0.25):
 "
 read ttime
 
-echo -n "Are these hours billable[y/n]?"
+echo -n "Are these hours billable[Y/N]? "
 read billable
 
-echo -n "What did you work on?"
+echo -n "Was this an Emergency[Y/N]? "
+read emergency
+
+echo -n "What did you work on? "
 read productivity
 
-echo -e "CMerrick" \| `date +%A%F` \| $stime \| `date +%A%F` \| $etime \| $ttime \| "MGHPCC Intern" \| "($billable)" \| "(n)" \| "$productivity"  >> "`date +%A%F`"payperiod.txt
+# change date to only show numerals
+echo -e "CMerrick" \| `date +%m/%d/%y`  $stime \| `date +%m/%d/%y`  $etime \| $ttime \| "MGHPCC/INTERN" \| "$billable" \| "$emergency" \| "$productivity"  >> "`date +%A%F`"payperiod.txt
 
-echo -n "Would you like to submit these hours[y/n]?"
+echo -n "Would you like to submit these hours[y/n]? "
 read payp
 
 if [ $payp = y ]
 then
+
+echo -n "How many hours have you worked so far this month? "
+read mtotal
        
-cat "`date +%A%F`"payperiod.txt | mail -s "`date +%A%F`" sb@intranet.techsquare.com
+cat "`date +%A%F`"payperiod.txt | mail -s "Total Hours for the Pay Period to Date: $mtotal" sb@intranet.techsquare.com
 
 #email daily
 #
